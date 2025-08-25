@@ -10,54 +10,55 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var birinciSayı: UITextField!
-    
     @IBOutlet weak var ikinciSayı: UITextField!
-    
     @IBOutlet weak var sonuç: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-    
     
     @IBAction func toplaTıkla(_ sender: Any) {
-        if let birinciTamSayı=Int(birinciSayı.text!){
-            if let ikinciTamSayı=Int(ikinciSayı.text!){
-                let toplamaSonucu=birinciTamSayı+ikinciTamSayı
-                sonuç.text=String(toplamaSonucu)
-            }
-        }
-    }
-    
-    @IBAction func bölTıkla(_ sender: Any) {
-        if let birinciTamSayı=Int(birinciSayı.text!){
-            if let ikinciTamSayı=Int(ikinciSayı.text!){
-                let bölmeSonucu=birinciTamSayı/ikinciTamSayı
-                sonuç.text=String(bölmeSonucu)
-            }
+        if let (a, b) = sayılarıAl() {
+            let toplam = a + b
+            sonuç.text = String(format: "%.2f", toplam)
         }
     }
     
     @IBAction func çıkarTıkla(_ sender: Any) {
-        if let birinciTamSayı=Int(birinciSayı.text!){
-            if let ikinciTamSayı=Int(ikinciSayı.text!){
-                let çıkarmaSonucu=birinciTamSayı-ikinciTamSayı
-                sonuç.text=String(çıkarmaSonucu)
-            }
+        if let (a, b) = sayılarıAl() {
+            let fark = a - b
+            sonuç.text = String(format: "%.2f", fark)
         }
     }
-    
     
     @IBAction func çarpTıkla(_ sender: Any) {
-        if let birinciTamSayı=Int(birinciSayı.text!){
-            if let ikinciTamSayı=Int(ikinciSayı.text!){
-                let çarpmaSonucu=birinciTamSayı*ikinciTamSayı
-                sonuç.text=String(çarpmaSonucu)
+        if let (a, b) = sayılarıAl() {
+            let çarpım = a * b
+            sonuç.text = String(format: "%.2f", çarpım)
+        }
+    }
+    
+    @IBAction func bölTıkla(_ sender: Any) {
+        if let (a, b) = sayılarıAl() {
+            if b == 0 {
+                sonuç.text = "Sıfıra bölünemez!"
+            } else {
+                let bölüm = a / b
+                sonuç.text = String(format: "%.2f", bölüm)
             }
         }
     }
+    
+
+    private func sayılarıAl() -> (Double, Double)? {
+        guard let birinciText = birinciSayı.text,
+              let ikinciText = ikinciSayı.text,
+              let a = Double(birinciText),
+              let b = Double(ikinciText) else {
+            sonuç.text = "Geçerli sayı giriniz!"
+            return nil
+        }
+        return (a, b)
+    }
 }
-
-
-
 
